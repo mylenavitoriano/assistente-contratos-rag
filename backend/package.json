@@ -1,0 +1,41 @@
+{
+  "name": "area-incrivel-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.3.0",
+    "@fastify/multipart": "^10.1.0",
+    "@google/genai": "^2.14.0",
+    "@huggingface/transformers": "^4.2.0",
+    "fastify": "^5.10.0",
+    "fastify-plugin": "^5.1.0",
+    "pdfjs-dist": "^5.7.284",
+    "pg": "^8.22.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
+    "tsx": "^4.23.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  },
+  "allowScripts": {
+    "@google/genai@2.14.0": true,
+    "esbuild@0.28.1": true,
+    "onnxruntime-node@1.24.3": true,
+    "protobufjs@7.6.5": true,
+    "sharp@0.34.5": true
+  }
+}
