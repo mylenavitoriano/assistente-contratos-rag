@@ -10,6 +10,7 @@ import { ZodError } from 'zod';
 
 import { env } from './config/env.js';
 import { AppError } from './shared/errors.js';
+import { dbPlugin } from './plugins/db.js';
 import { healthRoutes } from './modules/health/health.routes.js';
 
 const MEGABYTE = 1024 * 1024;
@@ -77,6 +78,8 @@ export async function buildApp(): Promise<FastifyInstance> {
       message: `Rota ${request.method} ${request.url} não encontrada.`,
     }),
   );
+
+  await app.register(dbPlugin);
 
   await app.register(healthRoutes, { prefix: '/api' });
 
