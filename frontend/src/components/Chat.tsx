@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Markdown from 'react-markdown';
 
-import type { Message } from '../types';
+import type { Contract, Message } from '../types';
 import { Sources } from './Sources';
 import styles from './Chat.module.css';
 
 type ChatProps = {
+  contracts: Contract[];
   messages: Message[];
   pending: boolean;
   disabled: boolean;
@@ -13,13 +14,26 @@ type ChatProps = {
   onSend: (question: string) => void;
 };
 
-const SUGGESTIONS = [
-  'Qual a multa por distrato do contrato da Maria Fernanda Santos?',
-  'Quais contratos têm prazo de tolerância de 180 dias para entrega?',
-  'Qual a garantia de impermeabilização do contrato CVV-2024-0312?',
-];
+function buildSuggestions(contracts: Contract[]): string[] {
+  const withBuyer = contracts.find((contract) => contract.buyerName);
+  const withNumber = contracts.find((contract) => contract.contractNumber);
+  const withDevelopment = contracts.find((contract) => contract.development);
+
+  return [
+    withBuyer
+      ? `Qual a multa por distrato do contrato de ${withBuyer.buyerName}?`
+      : 'Qual a multa por distrato prevista nos contratos?',
+    withDevelopment
+      ? `Como funciona o reajuste pelo INCC no empreendimento ${withDevelopment.development}?`
+      : 'Como funciona o reajuste pelo INCC?',
+    withNumber
+      ? `Qual a garantia de impermeabilização do contrato ${withNumber.contractNumber}?`
+      : 'Qual o prazo de garantia de impermeabilização?',
+  ];
+}
 
 export function Chat({
+  contracts,
   messages,
   pending,
   disabled,
@@ -27,6 +41,7 @@ export function Chat({
   onSend,
 }: ChatProps) {
   const [draft, setDraft] = useState('');
+  const suggestions = buildSuggestions(contracts);
   const threadRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -62,7 +77,7 @@ export function Chat({
               com o trecho de origem à vista.
             </p>
             <div className={styles.suggestions}>
-              {SUGGESTIONS.map((suggestion) => (
+              {suggestions.map((suggestion) => (
                 <button
                   key={suggestion}
                   type="button"

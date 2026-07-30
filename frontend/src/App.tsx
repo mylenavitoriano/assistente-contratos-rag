@@ -87,6 +87,7 @@ export default function App() {
         </header>
 
         <Chat
+          contracts={contracts}
           messages={messages}
           pending={pending}
           disabled={modelLoading || noContracts}
