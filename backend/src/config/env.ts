@@ -11,10 +11,10 @@ const envSchema = z.object({
 
   DATABASE_URL: z.string().min(1, 'DATABASE_URL é obrigatória'),
 
-  EMBEDDING_MODEL: z
-    .string()
-    .default('Xenova/paraphrase-multilingual-MiniLM-L12-v2'),
+  EMBEDDING_MODEL: z.string().default('Xenova/multilingual-e5-small'),
   EMBEDDING_DIMENSIONS: z.coerce.number().int().positive().default(384),
+  EMBEDDING_QUERY_PREFIX: z.string().default('query: '),
+  EMBEDDING_PASSAGE_PREFIX: z.string().default('passage: '),
   MODEL_CACHE_DIR: z.string().default('/app/.model-cache'),
 
   LLM_PROVIDER: z.enum(['gemini']).default('gemini'),

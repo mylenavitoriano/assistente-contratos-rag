@@ -11,6 +11,7 @@ import { ZodError } from 'zod';
 import { env } from './config/env.js';
 import { AppError } from './shared/errors.js';
 import { dbPlugin } from './plugins/db.js';
+import { embeddingsPlugin } from './plugins/embeddings.js';
 import { healthRoutes } from './modules/health/health.routes.js';
 
 const MEGABYTE = 1024 * 1024;
@@ -80,6 +81,7 @@ export async function buildApp(): Promise<FastifyInstance> {
   );
 
   await app.register(dbPlugin);
+  await app.register(embeddingsPlugin);
 
   await app.register(healthRoutes, { prefix: '/api' });
 

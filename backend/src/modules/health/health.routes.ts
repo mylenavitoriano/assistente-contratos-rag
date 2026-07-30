@@ -1,5 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 
+import { getEmbedderStatus } from '../embeddings/embedder.js';
+
 export async function healthRoutes(app: FastifyInstance): Promise<void> {
   app.get('/health', async (_request, reply) => {
     let database: 'up' | 'down' = 'up';
@@ -11,12 +13,12 @@ export async function healthRoutes(app: FastifyInstance): Promise<void> {
       database = 'down';
     }
 
-    const status = database === 'up' ? 'ok' : 'degraded';
+    const embedder = getEmbedderStatus();
 
     return reply.status(database === 'up' ? 200 : 503).send({
-      status,
+      status: database === 'up' ? 'ok' : 'degraded',
       uptime: Math.round(process.uptime()),
-      dependencies: { database },
+      dependencies: { database, embedder },
     });
   });
 }

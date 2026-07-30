@@ -37,8 +37,10 @@ services:
       LOG_LEVEL: ${LOG_LEVEL:-info}
       CORS_ORIGIN: ${CORS_ORIGIN:-*}
       DATABASE_URL: postgres://${POSTGRES_USER:-contratos}:${POSTGRES_PASSWORD:-contratos}@db:5432/${POSTGRES_DB:-contratos}
-      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-Xenova/paraphrase-multilingual-MiniLM-L12-v2}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-Xenova/multilingual-e5-small}
       EMBEDDING_DIMENSIONS: ${EMBEDDING_DIMENSIONS:-384}
+      EMBEDDING_QUERY_PREFIX: '${EMBEDDING_QUERY_PREFIX:-query: }'
+      EMBEDDING_PASSAGE_PREFIX: '${EMBEDDING_PASSAGE_PREFIX:-passage: }'
       MODEL_CACHE_DIR: /app/.model-cache
       LLM_PROVIDER: ${LLM_PROVIDER:-gemini}
       LLM_MODEL: ${LLM_MODEL:-gemini-2.5-flash}
