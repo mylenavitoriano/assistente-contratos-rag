@@ -1,11 +1,16 @@
 import type { FastifyInstance } from 'fastify';
+import { z } from 'zod';
 
 import { env } from '../../config/env.js';
-import { badRequest, unprocessable } from '../../shared/errors.js';
+import { badRequest, notFound, unprocessable } from '../../shared/errors.js';
 import { indexContract } from './indexer.js';
-import { listContracts } from './repository.js';
+import { deleteContract, listContracts } from './repository.js';
 
 const PDF_MAGIC = '%PDF-';
+
+const contractParams = z.object({
+  id: z.uuid('Identificador de contrato inválido.'),
+});
 
 export async function contractRoutes(app: FastifyInstance): Promise<void> {
   app.get('/contracts', async () => ({ contracts: await listContracts() }));
@@ -41,5 +46,18 @@ export async function contractRoutes(app: FastifyInstance): Promise<void> {
     });
 
     return reply.status(201).send({ contract });
+  });
+
+  app.delete('/contracts/:id', async (request, reply) => {
+    const { id } = contractParams.parse(request.params);
+    const removed = await deleteContract(id);
+
+    if (!removed) {
+      throw notFound('Contrato não encontrado.');
+    }
+
+    request.log.info({ contractId: id }, 'contrato removido');
+
+    return reply.status(204).send();
   });
 }

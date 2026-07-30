@@ -26,6 +26,7 @@ services:
     build:
       context: ./backend
       target: production
+    image: assistente-contratos-backend:production
     restart: unless-stopped
     depends_on:
       db:

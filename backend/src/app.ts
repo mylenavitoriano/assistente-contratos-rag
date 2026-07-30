@@ -54,7 +54,10 @@ export async function buildApp(): Promise<FastifyInstance> {
       return reply.status(400).send({
         code: 'VALIDATION_ERROR',
         message: 'Requisição inválida.',
-        details: error.issues,
+        details: error.issues.map((issue) => ({
+          field: issue.path.join('.') || null,
+          message: issue.message,
+        })),
       });
     }
 
