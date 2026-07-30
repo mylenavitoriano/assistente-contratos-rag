@@ -69,6 +69,17 @@ services:
       retries: 12
       start_period: 90s
 
+  frontend:
+    build:
+      context: ./frontend
+      target: production
+    image: assistente-contratos-frontend:production
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - '${FRONTEND_PORT:-8080}:80'
+
 volumes:
   pgdata:
   model_cache:

@@ -1,0 +1,119 @@
+:root {
+  --white: #ffffff;
+  --surface: #fbfbfa;
+  --surface-raised: #f6f6f6;
+
+  --charcoal: #302a2a;
+  --ink: #1c1918;
+  --text: #333839;
+  --text-muted: #7c7c7c;
+  --text-faint: #a3a1a0;
+
+  --brand: #d12435;
+  --brand-hover: #b81f2e;
+  --brand-soft: rgba(209, 36, 53, 0.08);
+  --brand-ring: rgba(209, 36, 53, 0.28);
+
+  --line: rgba(48, 42, 42, 0.09);
+  --line-strong: rgba(48, 42, 42, 0.16);
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+
+  --shadow-xs: 0 1px 2px rgba(48, 42, 42, 0.05);
+  --shadow-sm: 0 2px 8px -2px rgba(48, 42, 42, 0.1);
+  --shadow: 0 12px 32px -16px rgba(48, 42, 42, 0.28);
+
+  --sidebar-width: 320px;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Helvetica Neue',
+    Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+::selection {
+  background: var(--brand-soft);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(48, 42, 42, 0.16);
+  border: 3px solid transparent;
+  border-radius: 99px;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(48, 42, 42, 0.28);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

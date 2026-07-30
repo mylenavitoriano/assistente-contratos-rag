@@ -1,0 +1,68 @@
+.shell {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 32px;
+  height: 56px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--line);
+  background: rgba(251, 251, 250, 0.86);
+  backdrop-filter: saturate(180%) blur(12px);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.newChat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: var(--white);
+  font-size: 12.5px;
+  font-weight: 550;
+  color: var(--text-muted);
+  transition:
+    border-color 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+
+.newChat:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.newChat:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 860px) {
+  .shell {
+    flex-direction: column;
+  }
+
+  .topbar {
+    padding: 0 20px;
+  }
+}
