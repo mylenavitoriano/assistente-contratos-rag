@@ -4,8 +4,6 @@ import { env } from '../../config/env.js';
 import { AppError, serviceUnavailable } from '../../shared/errors.js';
 import type { LlmProvider, LlmRequest } from './types.js';
 
-const DEFAULT_MAX_OUTPUT_TOKENS = 2048;
-
 function toContents(request: LlmRequest) {
   return request.messages.map((message) => ({
     role: message.role === 'assistant' ? 'model' : 'user',
@@ -17,8 +15,10 @@ function toConfig(request: LlmRequest) {
   return {
     systemInstruction: request.system,
     temperature: request.temperature ?? env.LLM_TEMPERATURE,
-    maxOutputTokens: request.maxOutputTokens ?? DEFAULT_MAX_OUTPUT_TOKENS,
-    thinkingConfig: { thinkingBudget: 0 },
+    maxOutputTokens: request.maxOutputTokens ?? env.LLM_MAX_OUTPUT_TOKENS,
+    ...(env.LLM_THINKING_BUDGET >= 0
+      ? { thinkingConfig: { thinkingBudget: env.LLM_THINKING_BUDGET } }
+      : {}),
   };
 }
 

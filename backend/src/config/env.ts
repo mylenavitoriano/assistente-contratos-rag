@@ -18,9 +18,11 @@ const envSchema = z.object({
   MODEL_CACHE_DIR: z.string().default('/app/.model-cache'),
 
   LLM_PROVIDER: z.enum(['gemini']).default('gemini'),
-  LLM_MODEL: z.string().default('gemini-2.5-flash'),
+  LLM_MODEL: z.string().default('gemini-3.1-flash-lite'),
   LLM_API_KEY: z.string().default(''),
   LLM_TEMPERATURE: z.coerce.number().min(0).max(2).default(0.1),
+  LLM_THINKING_BUDGET: z.coerce.number().int().min(-1).default(0),
+  LLM_MAX_OUTPUT_TOKENS: z.coerce.number().int().positive().default(2048),
 
   MAX_UPLOAD_SIZE_MB: z.coerce.number().int().positive().default(25),
   RETRIEVAL_CANDIDATES: z.coerce.number().int().positive().default(40),
