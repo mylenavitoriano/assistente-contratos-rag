@@ -15,7 +15,7 @@ ENV NODE_ENV=development
 COPY tsconfig.json ./
 COPY src ./src
 EXPOSE 3333
-CMD ["npm", "run", "dev"]
+CMD ["./node_modules/.bin/tsx", "src/server.ts"]
 
 FROM base AS production
 ENV NODE_ENV=production

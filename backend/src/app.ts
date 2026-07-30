@@ -15,6 +15,7 @@ import { embeddingsPlugin } from './plugins/embeddings.js';
 import { healthRoutes } from './modules/health/health.routes.js';
 import { contractRoutes } from './modules/contracts/contracts.routes.js';
 import { searchRoutes } from './modules/search/search.routes.js';
+import { chatRoutes } from './modules/chat/chat.routes.js';
 
 const MEGABYTE = 1024 * 1024;
 
@@ -91,6 +92,7 @@ export async function buildApp(): Promise<FastifyInstance> {
   await app.register(healthRoutes, { prefix: '/api' });
   await app.register(contractRoutes, { prefix: '/api' });
   await app.register(searchRoutes, { prefix: '/api' });
+  await app.register(chatRoutes, { prefix: '/api' });
 
   return app;
 }
