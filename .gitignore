@@ -19,5 +19,7 @@ Thumbs.db
 .idea/
 .claude/settings.local.json
 
+DOCUMENTACAO.md
+
 storage/
 .model-cache/
