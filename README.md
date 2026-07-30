@@ -246,6 +246,32 @@ O `/api/chat` emite eventos SSE na ordem `conversation` → `sources` → `delta
 
 ---
 
+## Testes
+
+O backend tem **42 testes** cobrindo chunking, extração de metadados, leitura de
+PDF, contrato da API e qualidade do retrieval.
+
+Suba o ambiente de desenvolvimento e rode dentro do container — os testes de
+embeddings dependem do runtime nativo instalado na imagem:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+docker compose exec backend npm test
+```
+
+| Arquivo | O que cobre |
+|---------|-------------|
+| `chunker.test.ts` | Divisão por cláusula, reconstrução através da quebra de página, referência inline que não é cabeçalho, limite de tamanho, sobreposição, entrada vazia |
+| `metadata.test.ts` | Os seis campos extraídos por regex, ausência de invenção quando o dado não existe, montagem do contexto do chunk |
+| `pdf.test.ts` | Extração dos cinco contratos reais, as dez cláusulas de cada um, recusa de arquivo que não é PDF |
+| `api.test.ts` | Health check, 404 padronizado, validação de entrada, recusa de mimetype forjado, erro sem vazar schema interno |
+| `retrieval.test.ts` | Acerto na cláusula correta por nome do comprador e por número de contrato, atuação dos três rankers, busca sem acento |
+
+Os testes que dependem de banco são **pulados automaticamente** quando ele não
+está disponível, então a suíte nunca falha por ambiente.
+
+---
+
 ## Desenvolvimento
 
 Hot reload com o código montado no container:
@@ -312,4 +338,4 @@ docker compose down -v && docker compose up --build
 - [x] Streaming das respostas via Server-Sent Events
 - [x] Sumarização automática ao indexar (comprador, valor, prazo)
 - [x] Histórico multi-turn com contexto de conversa
-- [ ] Testes automatizados do backend
+- [x] Testes automatizados do backend

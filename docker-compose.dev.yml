@@ -8,5 +8,7 @@ services:
       LOG_LEVEL: ${LOG_LEVEL:-debug}
     volumes:
       - ./backend/src:/app/src
+      - ./backend/tests:/app/tests
+      - ./backend/vitest.config.ts:/app/vitest.config.ts
       - ./data:/app/data:ro
       - model_cache:/app/.model-cache

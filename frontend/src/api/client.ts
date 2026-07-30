@@ -1,4 +1,4 @@
-import type { Contract, HealthStatus, Message, Source } from '../types';
+import type { Contract, HealthStatus, Source } from '../types';
 
 const BASE = '/api';
 
@@ -18,9 +18,7 @@ async function parseError(response: Response): Promise<never> {
   try {
     const body = (await response.json()) as { message?: string };
     if (body.message) message = body.message;
-  } catch {
-    // resposta sem corpo JSON
-  }
+  } catch {}
 
   throw new ApiError(message, response.status);
 }
@@ -57,13 +55,6 @@ export async function removeContract(id: string): Promise<void> {
   if (!response.ok) await parseError(response);
 }
 
-export async function fetchMessages(conversationId: string): Promise<Message[]> {
-  const response = await fetch(`${BASE}/conversations/${conversationId}/messages`);
-  if (!response.ok) await parseError(response);
-  const body = (await response.json()) as { messages: Message[] };
-  return body.messages;
-}
-
 export type ChatHandlers = {
   onConversation: (conversationId: string) => void;
   onSources: (sources: Source[]) => void;
@@ -91,9 +82,7 @@ export async function streamChat(
     try {
       const body = (await response.json()) as { message?: string };
       if (body.message) message = body.message;
-    } catch {
-      // resposta sem corpo JSON
-    }
+    } catch {}
 
     handlers.onError(message);
     return;

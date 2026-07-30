@@ -71,5 +71,5 @@ export function useContracts(notify: (message: string, tone: 'ok' | 'error') => 
     [contracts, notify],
   );
 
-  return { contracts, loading, uploading, upload, remove, reload };
+  return { contracts, loading, uploading, upload, remove };
 }
